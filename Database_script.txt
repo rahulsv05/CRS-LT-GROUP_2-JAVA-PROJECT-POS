@@ -1,0 +1,136 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+SHOW WARNINGS;
+-- -----------------------------------------------------
+-- Schema crs
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema crs
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `crs` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+SHOW WARNINGS;
+USE `crs` ;
+
+-- -----------------------------------------------------
+-- Table `crs`.`course`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`course` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`course` (
+  `courseCode` VARCHAR(225) NOT NULL,
+  `courseName` VARCHAR(45) NOT NULL,
+  `instructorId` INT NULL DEFAULT NULL,
+  `seat` INT NULL DEFAULT NULL,
+  `fee` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`courseCode`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `crs`.`payment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`payment` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`payment` (
+  `ref_id` INT NOT NULL AUTO_INCREMENT,
+  `studentId` INT NOT NULL,
+  `amount` INT NOT NULL,
+  `status` TINYINT NOT NULL,
+  PRIMARY KEY (`ref_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 505
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `crs`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`user` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`user` (
+  `user_id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `crs`.`professor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`professor` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`professor` (
+  `user_id` INT NOT NULL,
+  `department` VARCHAR(45) NOT NULL,
+  `designation` VARCHAR(45) NOT NULL,
+  `DOJ` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `crs`.`user` (`user_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `crs`.`registeredcourse`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`registeredcourse` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`registeredcourse` (
+  `courseCode` VARCHAR(225) NOT NULL,
+  `courseName` VARCHAR(45) NOT NULL,
+  `studentId` INT NOT NULL,
+  `Grade` VARCHAR(45) NULL DEFAULT NULL)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `crs`.`student`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `crs`.`student` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `crs`.`student` (
+  `student_id` INT NOT NULL,
+  `branch` VARCHAR(45) NOT NULL,
+  `batch` VARCHAR(45) NOT NULL,
+  `isApproved` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`student_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
